@@ -50,14 +50,40 @@ products.forEach( (product) => {
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary">
+      <button class="add-to-cart-button button-primary js-add-to-cart"
+      data-product-id="${product.id}">
         Add to Cart
       </button>
     </div>`;
 });
 
-console.log(productsHTML);
-
-//add the generated html to the products-grid element using the DOM
+//add the generated html to the products-grid element in the DOM
 document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
+
+//add cart button to the DOM and add event listener to all the add to cart buttons
+document.querySelectorAll('.js-add-to-cart')
+//for each button add an event listener that adds the product to the cart array when clicked.
+  .forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+
+      let matchingItem;
+//check to see if the product is already in the cart
+      cart.forEach((item) => {
+        if (productId === item.productId) {
+          matchingItem = item;
+        }
+      });
+
+      if (matchingItem) {
+        matchingItem.quantity += 1;
+      } else{
+        cart.push({
+          productId: productId,
+          quantity: 1
+        });
+      }
+      console.log(cart);
+    });
+  });
