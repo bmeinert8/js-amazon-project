@@ -45,7 +45,7 @@ products.forEach( (product) => {
         
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart-${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -61,35 +61,49 @@ products.forEach( (product) => {
 document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
 
+/*
+  Use an object to save the timeout ids.
+ The reason we use an object is because each product
+ will have its own timeoutId. So an object lets us
+ save multiple timeout ids for different products.
+ For example:
+ {
+   'product-id1': 2,
+   'product-id2': 5,
+   ...
+ }
+ (2 and 5 are ids that are returned when we call setTimeout).*/
+const addedMessageTimeouts = {};
+
 //add cart button to the DOM and add event listener to all the add to cart buttons
 document.querySelectorAll('.js-add-to-cart')
-//for each button add an event listener that adds the product to the cart array when clicked.
+  //for each button add an event listener that adds the product to the cart array when clicked.
   .forEach((button) => {
     button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
+      const {productId} = button.dataset;
 
       let matchingItem;
-//check to see if the product is already in the cart
+      //check to see if the product is already in the cart
       cart.forEach((item) => {
         if (productId === item.productId) {
           matchingItem = item;
         }
       });
 
-//select the quantity selector for the product.
+    //select the quantity selector for the product.
       const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-//get the quantity value from the quantity selector
-//convert the value to a number and store it in the quantity variable
+    //get the quantity value from the quantity selector
+    //convert the value to a number and store it in the quantity variable
       let quantity = Number(quantitySelector.value);
 
 
-//if the product is already in the cart, increase the quantity by the quantity selected. If not add the product to the cart array.
+      /* if the product is already in the cart, increase the quantity by the quantity selected. If not add the product to the cart array.*/
       if (matchingItem) {
         matchingItem.quantity += quantity;
       } else{
         cart.push({
-          productId: productId,
-          quantity: quantity
+          productId,
+          quantity
         });
       }
 
@@ -101,5 +115,22 @@ document.querySelectorAll('.js-add-to-cart')
 
       document.querySelector('.js-cart-quantity')
         .innerHTML = cartQuantity;
+
+      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+
+      addedMessage.classList.add('added-to-cart-visible');
+      /* Check if there's a previous timeout for this
+      product. If there is, we should stop it.*/
+      const previousTimeoutId = addedMessageTimeouts[productId];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+
+      const timeoutId = setTimeout(() => { addedMessage.classList.remove('added-to-cart-visible');
+      }, 2000);
+
+      /* Save the timeoutId for this product
+       so we can stop it later if we need to.*/
+      addedMessageTimeouts[productId] = timeoutId;
     });
   });
