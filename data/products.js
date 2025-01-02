@@ -656,5 +656,40 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "fhgjgjgj-5323-403f-b7cf-57fde044a955",
+    image: "images/products/backpack.jpg",
+    name: "Unisex Backpack - Durable, lightweight and water-resistant",
+    rating: {
+      stars: 4.5,
+      count: 6893
+    },
+    priceCents: 3899,
+    keywords: [
+      "backpack",
+      "bags",
+      "travel",
+      "school",
+      "work"
+    ]
+  },
+  {
+    id: "j324j3j4-5323-403f-b7cf-57fde044a955",
+    image: "images/products/umbrella.jpg",
+    name: "Travel Umbrella - Windproof, Auto Open",
+    rating: {
+      stars: 4,
+      count: 523
+    },
+    priceCents: 849,
+    keywords: [
+      "umbrella",
+      "accessories",
+      "rain",
+      "weather",
+      "travel",
+      "windproof"
+    ]
   }
 ];
