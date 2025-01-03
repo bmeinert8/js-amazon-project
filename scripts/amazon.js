@@ -1,5 +1,7 @@
 //Import cart array from cart js file
 import {cart} from '../data/cart.js';
+//Import products array from products js file
+import {products} from '../data/products.js';
 
 //loop thorugh the products array and create html for the data
 
