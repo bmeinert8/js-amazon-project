@@ -1,3 +1,6 @@
+//Import cart array from cart js file
+import {cart} from '../data/cart.js';
+
 //loop thorugh the products array and create html for the data
 
 //variable to store the html from the loop
