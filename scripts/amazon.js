@@ -94,6 +94,9 @@ function updateCartQuantity() {
     .innerHTML = cartQuantity;
 }
 
+updateCartQuantity();
+
+
 //function to display the added to cart message for 2 seconds
 function timeoutMessage(productId) {
   const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
