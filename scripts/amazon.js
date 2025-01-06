@@ -1,5 +1,5 @@
 //Import cart array from cart js file
-import {cart, addToCart} from '../data/cart.js';
+import {cart, addToCart, calculateCartQuantity} from '../data/cart.js';
 //Import products array from products js file
 import {products} from '../data/products.js';
 //Import formatCurrency function from money js file
@@ -84,11 +84,7 @@ const addedMessageTimeouts = {};
 
 //function to update the cart quantity in the DOM
 function updateCartQuantity() {
-  let cartQuantity = 0;
-
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  })
+  const cartQuantity = calculateCartQuantity();
 
   document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
