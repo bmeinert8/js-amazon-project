@@ -34,8 +34,9 @@ export function addToCart(productId) {
     });
   }
 
-  saveToStorage();
+    saveToStorage();
 }
+
 
 //function to remove product from the cart array
 export function removeFromCart(productId) {
@@ -58,4 +59,18 @@ export function calculateCartQuantity() {
   });
 
   return cartQuantity;
+}
+
+export function updateQuantity(productId, newQuantity) {
+  let matchingItem;
+
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+  });
+
+  matchingItem.quantity = newQuantity;
+
+  saveToStorage();
 }
