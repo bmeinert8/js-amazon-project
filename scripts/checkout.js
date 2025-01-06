@@ -151,10 +151,17 @@ document.querySelectorAll('.js-save-link')
       const quantityInput = document.querySelector(
         `.js-quantity-input-${productId}`
       );
-      const newQuantity = Number(quantityInput.value);
+      let newQuantity = Number(quantityInput.value);
+
+      // Ensure the new quantity is within the range 0 to 10
+      if (newQuantity < 0) {
+        newQuantity = 0;
+      } else if (newQuantity > 10) {
+        newQuantity = 10;
+      }
+
       updateQuantity(productId, newQuantity);
 
-      
       const quantityLabel = document.querySelector(
         `.js-quantity-label-${productId}`
       );
@@ -163,7 +170,3 @@ document.querySelectorAll('.js-save-link')
       updateCartQuantity();
     });
   });
-
-  
-  
-  
