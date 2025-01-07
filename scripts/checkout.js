@@ -140,7 +140,6 @@ document.querySelectorAll('.js-update-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
-      console.log(productId);
 
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`
@@ -163,13 +162,6 @@ document.querySelectorAll('.js-save-link')
         `.js-quantity-input-${productId}`
       );
       let newQuantity = Number(quantityInput.value);
-
-      // Ensure the new quantity is within the range 0 to 10
-      if (newQuantity < 0) {
-        newQuantity = 0;
-      } else if (newQuantity > 10) {
-        newQuantity = 10;
-      }
 
       updateQuantity(productId, newQuantity);
 
