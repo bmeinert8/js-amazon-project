@@ -107,24 +107,24 @@
 .product-name {
   font-weight: 700;
   margin-bottom: 8px;
-  font-size: 22px;
+  font-size: 19px;
 }
 
 .product-price {
   color: rgb(177, 39, 4);
   font-weight: 700;
   margin-bottom: 5px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .quantity-label {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
 }
 
 .product-quantity .link-primary {
   margin-left: 3px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 @media (max-width: 1000px) {
@@ -145,6 +145,7 @@
 .delivery-options-title {
   font-weight: 700;
   margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .delivery-option {
@@ -161,7 +162,7 @@
 
 .delivery-option-date {
   color: rgb(0, 118, 0);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   margin-bottom: 3px;
 }
