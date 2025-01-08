@@ -59,18 +59,7 @@ cart.forEach((cartItem) => {
             <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
               Update
             </span>
-            <select class="quantity-input js-quantity-input-${matchingProduct.id} value="${cartItem.quantity}"">
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
+            <input class="quantity-input js-quantity-input-${matchingProduct.id}" type="number" value="${cartItem.quantity}">
             <span class="save-quantity-link link-primary js-save-link" data-product-id="${matchingProduct.id}">Save</span>
             <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
               Delete
