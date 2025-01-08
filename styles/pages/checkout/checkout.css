@@ -153,6 +153,7 @@
 
 .delivery-option-date {
   color: rgb(0, 118, 0);
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 3px;
 }
@@ -211,7 +212,7 @@
 }
 
 .quantity-input {
-  width: 30px;
+  width: 50px;
   display: none;
 }
 
