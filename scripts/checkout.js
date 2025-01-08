@@ -37,7 +37,7 @@ cart.forEach((cartItem) => {
             $${formatCurrency(matchingProduct.priceCents)}
           </div>
           <div class="product-quantity">
-            <span>
+            <span class="quantity-label">
               Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
             </span>
             <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
@@ -111,9 +111,13 @@ cart.forEach((cartItem) => {
   `;
 });
 
+
+// Add the generated HTML to the order summary element in the DOM
 document.querySelector('.js-order-summary')
   .innerHTML = cartSummaryHTML;
 
+
+// Add event listeners to the delete links. When clicked, remove the product from the cart and update the cart quantity.
 document.querySelectorAll('.js-delete-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -134,8 +138,10 @@ document.querySelectorAll('.js-delete-link')
     .innerHTML = `${cartQuantity} items`;
   }
 
+// Update the cart quantity in the DOM
 updateCartQuantity();
-  
+
+// Add event listeners to the update links. When clicked, show the quantity input and save link.  
 document.querySelectorAll('.js-update-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -149,6 +155,7 @@ document.querySelectorAll('.js-update-link')
     });
   });
 
+// Add event listeners to the save links. When clicked, update the quantity in the cart and update the cart quantity in the DOM.
 document.querySelectorAll('.js-save-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -163,13 +170,6 @@ document.querySelectorAll('.js-save-link')
         `.js-quantity-input-${productId}`
       );
       let newQuantity = Number(quantityInput.value);
-
-      // Ensure the new quantity is within the range 0 to 10
-      if (newQuantity < 0) {
-        newQuantity = 0;
-      } else if (newQuantity > 10) {
-        newQuantity = 10;
-      }
 
       updateQuantity(productId, newQuantity);
 
