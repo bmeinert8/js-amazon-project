@@ -25,10 +25,31 @@ cart.forEach((cartItem) => {
       matchingProduct = product;
   });
 
+ //get delivery option id out of the cart item
+ const deliveryOptionId = cartItem.deliveryOptionId;
+
+ //get the delivery option that matches the delivery option id
+ let deliveryOption;
+
+ //loop through the delivery options to find the delivery option that matches the delivery option id
+ deliveryOptions.forEach((option) => {
+  if (option.id === deliveryOptionId) {
+    deliveryOption = option;
+  }
+ });
+
+  //get and save todays date
+  const today = dayjs();
+  //add the delivery days to the current date
+  //delivery days is saved in the delivery option array imported from deliveryOptions.js
+  const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+  //format the date to be displayed in the cart
+  const dateString = deliveryDate.format('dddd, MMMM D');
+
   cartSummaryHTML +=`
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
-        Delivery date: Tuesday, June 21
+        Delivery date: ${dateString}
       </div>
 
       <div class="cart-item-details-grid">
