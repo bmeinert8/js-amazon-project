@@ -72,7 +72,7 @@ cart.forEach((cartItem) => {
           <div class="delivery-options-title">
             Choose a delivery option:
           </div>
-          ${deliveryOptionsHTML(matchingProduct)}
+          ${deliveryOptionsHTML(matchingProduct, cartItem)}
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@ cart.forEach((cartItem) => {
 });
 
 // Function to generate the "delivery-options" section of the cart summary
-function deliveryOptionsHTML(matchingProduct) {
+function deliveryOptionsHTML(matchingProduct, cartItem) {
   //save the delivery options to a variable
   let html = '';
 
@@ -98,11 +98,14 @@ function deliveryOptionsHTML(matchingProduct) {
     const priceString = deliveryOption.priceCents === 0
       ? 'FREE'
       : `$${formatCurrency(deliveryOption.priceCents)} -`;
-
+    //checking the delivery option that is selected to the item in the cart based on the delivery option id
+    //only want checked if the delivery option id matches the delivery option id in the cart
+    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
     html += `
       <div class="delivery-option">
         <input type="radio"
+          ${isChecked ? 'checked' : ''}
           class="delivery-option-input"
           name="delivery-option-${matchingProduct.id}">
         <div>
