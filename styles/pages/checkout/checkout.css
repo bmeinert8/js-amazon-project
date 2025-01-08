@@ -107,16 +107,24 @@
 .product-name {
   font-weight: 700;
   margin-bottom: 8px;
+  font-size: 22px;
 }
 
 .product-price {
   color: rgb(177, 39, 4);
   font-weight: 700;
   margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.quantity-label {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .product-quantity .link-primary {
   margin-left: 3px;
+  font-size: 18px;
 }
 
 @media (max-width: 1000px) {

@@ -6,9 +6,15 @@ import {
 } from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import {deliveryOptions} from '../data/deliveryOptions.js'
 
+
+// variable to store the HTML for the cart summary section. This will be built up in the loop below.
 let cartSummaryHTML = '';
 
+
+// Loop through each item in the cart and build up the HTML for the cart summary section.
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
 
@@ -19,10 +25,31 @@ cart.forEach((cartItem) => {
       matchingProduct = product;
   });
 
+ //get delivery option id out of the cart item
+ const deliveryOptionId = cartItem.deliveryOptionId;
+
+ //get the delivery option that matches the delivery option id
+ let deliveryOption;
+
+ //loop through the delivery options to find the delivery option that matches the delivery option id
+ deliveryOptions.forEach((option) => {
+  if (option.id === deliveryOptionId) {
+    deliveryOption = option;
+  }
+ });
+
+  //get and save todays date
+  const today = dayjs();
+  //add the delivery days to the current date
+  //delivery days is saved in the delivery option array imported from deliveryOptions.js
+  const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+  //format the date to be displayed in the cart
+  const dateString = deliveryDate.format('dddd, MMMM D');
+
   cartSummaryHTML +=`
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
-        Delivery date: Tuesday, June 21
+        Delivery date: ${dateString}
       </div>
 
       <div class="cart-item-details-grid">
@@ -37,7 +64,7 @@ cart.forEach((cartItem) => {
             $${formatCurrency(matchingProduct.priceCents)}
           </div>
           <div class="product-quantity">
-            <span>
+            <span class="quantity-label">
               Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
             </span>
             <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
@@ -66,54 +93,64 @@ cart.forEach((cartItem) => {
           <div class="delivery-options-title">
             Choose a delivery option:
           </div>
-          <div class="delivery-option">
-            <input type="radio" checked
-              class="delivery-option-input"
-              name="delivery-option-${matchingProduct.id}">
-            <div>
-              <div class="delivery-option-date">
-                Tuesday, June 21
-              </div>
-              <div class="delivery-option-price">
-                FREE Shipping
-              </div>
-            </div>
-          </div>
-          <div class="delivery-option">
-            <input type="radio"
-              class="delivery-option-input"
-              name="delivery-option-${matchingProduct.id}">
-            <div>
-              <div class="delivery-option-date">
-                Wednesday, June 15
-              </div>
-              <div class="delivery-option-price">
-                $4.99 - Shipping
-              </div>
-            </div>
-          </div>
-          <div class="delivery-option">
-            <input type="radio"
-              class="delivery-option-input"
-              name="delivery-option-${matchingProduct.id}">
-            <div>
-              <div class="delivery-option-date">
-                Monday, June 13
-              </div>
-              <div class="delivery-option-price">
-                $9.99 - Shipping
-              </div>
-            </div>
-          </div>
+          ${deliveryOptionsHTML(matchingProduct, cartItem)}
         </div>
       </div>
     </div>
   `;
 });
 
+// Function to generate the "delivery-options" section of the cart summary
+function deliveryOptionsHTML(matchingProduct, cartItem) {
+  //save the delivery options to a variable
+  let html = '';
+
+  deliveryOptions.forEach((deliveryOption) => {
+    
+    //get and save todays date
+    const today = dayjs();
+    //add the delivery days to the current date
+    //delivery days is saved in the delivery option array imported from deliveryOptions.js
+    const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+    //format the date to be displayed in the cart
+    const dateString = deliveryDate.format('dddd, MMMM D');
+    //generate price for the delivery option
+    //price is also saved in the delivery option array imported from deliveryOptions.js
+    const priceString = deliveryOption.priceCents === 0
+      ? 'FREE'
+      : `$${formatCurrency(deliveryOption.priceCents)} -`;
+    //checking the delivery option that is selected to the item in the cart based on the delivery option id
+    //only want checked if the delivery option id matches the delivery option id in the cart
+    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+
+    html += `
+      <div class="delivery-option">
+        <input type="radio"
+          ${isChecked ? 'checked' : ''}
+          class="delivery-option-input"
+          name="delivery-option-${matchingProduct.id}">
+        <div>
+          <div class="delivery-option-date">
+            ${dateString}
+          </div>
+          <div class="delivery-option-price">
+            ${priceString} Shipping
+          </div>
+        </div>
+      </div>
+    `
+  });
+
+  return html;
+}
+
+
+// Add the generated HTML to the order summary element in the DOM
 document.querySelector('.js-order-summary')
   .innerHTML = cartSummaryHTML;
 
+
+// Add event listeners to the delete links. When clicked, remove the product from the cart and update the cart quantity.
 document.querySelectorAll('.js-delete-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -127,6 +164,7 @@ document.querySelectorAll('.js-delete-link')
     });
   });
 
+// Function to update the cart quantity in the DOM
   function updateCartQuantity() {
     const cartQuantity = calculateCartQuantity();
 
@@ -134,8 +172,12 @@ document.querySelectorAll('.js-delete-link')
     .innerHTML = `${cartQuantity} items`;
   }
 
+
+// Update the cart quantity in the DOM
 updateCartQuantity();
-  
+
+
+// Add event listeners to the update links. When clicked, show the quantity input and save link.  
 document.querySelectorAll('.js-update-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -149,6 +191,8 @@ document.querySelectorAll('.js-update-link')
     });
   });
 
+
+// Add event listeners to the save links. When clicked, update the quantity in the cart and update the cart quantity in the DOM.
 document.querySelectorAll('.js-save-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -163,13 +207,6 @@ document.querySelectorAll('.js-save-link')
         `.js-quantity-input-${productId}`
       );
       let newQuantity = Number(quantityInput.value);
-
-      // Ensure the new quantity is within the range 0 to 10
-      if (newQuantity < 0) {
-        newQuantity = 0;
-      } else if (newQuantity > 10) {
-        newQuantity = 10;
-      }
 
       updateQuantity(productId, newQuantity);
 
