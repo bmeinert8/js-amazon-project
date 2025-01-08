@@ -6,9 +6,20 @@ import {
 } from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
+
+//test the dayjs library
+const today = dayjs();
+console.log(today.format('dddd, MMMM D'));
+
+
+
+// variable to store the HTML for the cart summary section. This will be built up in the loop below.
 let cartSummaryHTML = '';
 
+
+// Loop through each item in the cart and build up the HTML for the cart summary section.
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
 
@@ -131,6 +142,7 @@ document.querySelectorAll('.js-delete-link')
     });
   });
 
+// Function to update the cart quantity in the DOM
   function updateCartQuantity() {
     const cartQuantity = calculateCartQuantity();
 
@@ -138,8 +150,10 @@ document.querySelectorAll('.js-delete-link')
     .innerHTML = `${cartQuantity} items`;
   }
 
+
 // Update the cart quantity in the DOM
 updateCartQuantity();
+
 
 // Add event listeners to the update links. When clicked, show the quantity input and save link.  
 document.querySelectorAll('.js-update-link')
@@ -154,6 +168,7 @@ document.querySelectorAll('.js-update-link')
       container.classList.add('is-editing-quantity');
     });
   });
+
 
 // Add event listeners to the save links. When clicked, update the quantity in the cart and update the cart quantity in the DOM.
 document.querySelectorAll('.js-save-link')
