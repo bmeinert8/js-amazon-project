@@ -5,10 +5,10 @@ import {
   updateQuantity,
   updateDeliveryOption
 } from '../../data/cart.js';
-import {products} from '../../data/products.js';
+import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {deliveryOptions} from '../../data/deliveryOptions.js'
+import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js'
 
 
 //function to rewrite the order summary anytime something changes in the cart.
@@ -24,25 +24,15 @@ export function renderOrderSummary() {
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
 
-    let matchingProduct;
+    //get the product that matches the product id
+    const matchingProduct = getProduct(productId);
 
-    products.forEach((product) => {
-      if (product.id === productId)
-        matchingProduct = product;
-    });
+    //get delivery option id out of the cart item
+    const deliveryOptionId = cartItem.deliveryOptionId;
 
-  //get delivery option id out of the cart item
-  const deliveryOptionId = cartItem.deliveryOptionId;
+    //get the delivery option that matches the delivery option id
+    const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-  //get the delivery option that matches the delivery option id
-  let deliveryOption;
-
-  //loop through the delivery options to find the delivery option that matches the delivery option id
-  deliveryOptions.forEach((option) => {
-    if (option.id === deliveryOptionId) {
-      deliveryOption = option;
-    }
-  });
 
     //get and save todays date
     const today = dayjs();
