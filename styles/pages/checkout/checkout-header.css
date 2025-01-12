@@ -1,7 +1,7 @@
 .checkout-header {
-  height: 60px;
-  padding-left: 30px;
-  padding-right: 30px;
+  height: 3.75rem;
+  padding-left: 1.875rem;
+  padding-right: 1.875rem;
   background-color: white;
 
   display: flex;
@@ -16,30 +16,26 @@
 
 .header-content {
   width: 100%;
-  max-width: 1100px;
+  max-width: 68.75rem;
 
   display: flex;
   align-items: center;
 }
 
 .checkout-header-left-section {
-  width: 150px;
+  width: 9.375rem;
 }
 
 .amazon-logo {
-  width: 100px;
-  margin-top: 12px;
+  width: 6.25rem; /* 100px to rem */
+  margin-top: 0.75rem; /* 12px to rem */
 }
 
 .amazon-mobile-logo {
   display: none;
 }
 
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 575px or less, different
-   styles (inside the {...}) will be applied. */
-@media (max-width: 575px) {
+@media (max-width: 35.9375rem) { /* 575px to rem */
   .checkout-header-left-section {
     width: auto;
   }
@@ -50,8 +46,8 @@
 
   .amazon-mobile-logo {
     display: inline-block;
-    height: 35px;
-    margin-top: 5px;
+    height: 2.1875rem; /* 35px to rem */
+    margin-top: 0.3125rem; /* 5px to rem */
   }
 }
 
@@ -60,7 +56,7 @@
   flex-shrink: 0;
   text-align: center;
 
-  font-size: 25px;
+  font-size: 1.4rem; /* 22px to rem */
   font-weight: 500;
 
   display: flex;
@@ -69,34 +65,34 @@
 
 .return-to-home-link {
   color: rgb(0, 113, 133);
-  font-size: 23px;
+  font-size: 1.4rem; /* 22px to rem */
   text-decoration: none;
   cursor: pointer;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 62.5rem) { /* 1000px to rem */
   .checkout-header-middle-section {
-    font-size: 20px;
-    margin-right: 60px;
+    font-size: 1.25rem; /* 20px to rem */
+    margin-right: 3.75rem; /* 60px to rem */
   }
 
   .return-to-home-link {
-    font-size: 18px;
+    font-size: 1.125rem; /* 18px to rem */
   }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 35.9375rem) { /* 575px to rem */
   .checkout-header-middle-section {
-    margin-right: 5px;
+    margin-right: 0.3125rem; /* 5px to rem */
   }
 }
 
 .checkout-header-right-section {
   text-align: right;
-  width: 150px;
+  width: 9.375rem; /* 150px to rem */
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 62.5rem) { /* 1000px to rem */
   .checkout-header-right-section {
     width: auto;
   }
