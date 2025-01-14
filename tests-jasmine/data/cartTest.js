@@ -5,7 +5,7 @@ import {addToCart, cart, loadFromStorage} from '../../data/cart.js';
   36  const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
   37  let quantity = Number(quantitySelector.value);
   set the quantity to 1 for testing purposes
-  39 matvchingItem.quantity += quantity;
+  39 matvchingItem.quantity += 1;
 */
 
 describe('test suite: addToCart', () => {
